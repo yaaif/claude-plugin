@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="YAA\F dock icon">
+  <defs>
+    <linearGradient id="bg-gradient" x1="132" y1="96" x2="904" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B4E66"/>
+      <stop offset="0.52" stop-color="#0C7795"/>
+      <stop offset="1" stop-color="#0B2F5B"/>
+    </linearGradient>
+    <radialGradient id="bg-highlight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(298 236) rotate(30) scale(506 388)">
+      <stop offset="0" stop-color="#74F2FF" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#74F2FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glyph-gradient" x1="286" y1="272" x2="738" y2="742" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FEFF"/>
+      <stop offset="1" stop-color="#C5FAFF"/>
+    </linearGradient>
+    <radialGradient id="core-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 512) rotate(90) scale(330)">
+      <stop offset="0" stop-color="#89F4FF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#89F4FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bg-shadow" x="0" y="0" width="1024" height="1024" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="26" flood-color="#041C32" flood-opacity="0.36"/>
+    </filter>
+    <filter id="glyph-shadow" x="210" y="196" width="604" height="620" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#06253F" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#bg-shadow)">
+    <rect x="64" y="64" width="896" height="896" rx="220" fill="url(#bg-gradient)"/>
+    <rect x="64" y="64" width="896" height="896" rx="220" fill="url(#bg-highlight)"/>
+    <circle cx="512" cy="512" r="332" fill="url(#core-glow)"/>
+    <circle cx="512" cy="512" r="286" fill="none" stroke="#B9F7FF" stroke-opacity="0.2" stroke-width="36"/>
+  </g>
+
+  <g filter="url(#glyph-shadow)" fill="none" stroke="url(#glyph-gradient)" stroke-width="108" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M332 320L512 496L692 320"/>
+    <path d="M512 496V704"/>
+  </g>
+
+  <circle cx="332" cy="320" r="34" fill="#FFB14A"/>
+  <circle cx="692" cy="320" r="34" fill="#FFC96D"/>
+  <circle cx="512" cy="704" r="34" fill="#9CF8FF"/>
+</svg>

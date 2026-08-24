@@ -1,0 +1,16 @@
+{
+  "name": "yaaif",
+  "owner": {
+    "name": "YAA\\F / BeezLabs",
+    "url": "https://github.com/yaaif"
+  },
+  "plugins": [
+    {
+      "name": "yaaif-platform",
+      "source": {
+        "type": "path",
+        "path": "./"
+      }
+    }
+  ]
+}

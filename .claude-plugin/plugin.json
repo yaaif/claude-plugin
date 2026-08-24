@@ -1,0 +1,25 @@
+{
+  "name": "yaaif-platform",
+  "displayName": "YAAIF",
+  "description": "Authenticate to YAA\\F, plan use cases, create and maintain scenarios (Agent Specs), and create skills, MCP deployments, and ambient workflows from Claude Code.",
+  "version": "0.1.0",
+  "author": {
+    "name": "YAA\\F / BeezLabs",
+    "email": "support@yaaif.com"
+  },
+  "homepage": "https://github.com/yaaif/claude-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaaif/claude-plugin"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "yaaif",
+    "skills",
+    "mcp",
+    "ambient",
+    "workflows",
+    "keycloak",
+    "sap"
+  ]
+}

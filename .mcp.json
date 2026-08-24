@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "yaaif": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@yaaif/platform-mcp@1.3.0",
+        "--client",
+        "claude"
+      ]
+    }
+  }
+}
