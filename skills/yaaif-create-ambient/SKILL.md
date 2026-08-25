@@ -50,8 +50,8 @@ Author **step-only** graphs (`tool_call` / `action` (Set Context) / `trigger_wor
 | Structured try/catch | `try` / `catch` | Retry region + catch node (optional) |
 | Context Store | `context_store` | CRUD/query/search_similar; or `tool_call` → `context_*` |
 | Files / artifacts | `file_artifact` | load/list/search/share_link; or `tool_call` → `files_*` |
-| Outbound webhook | `webhook_outbound` | HTTPS POST; `policy.allowed_webhook_host_suffixes`; optional `bearer_token_binding` / `hmac_secret_binding` |
-| Batch / loop | `for_each` | Child trigger per item; `wait_mode` (`fire_and_forget` \| `wait_for_completion`); cap via `max_iterations` + policy `max_for_each_iterations` |
+| Outbound webhook | `webhook_outbound` | HTTPS GET/POST/PUT/PATCH; `timeout_seconds`; optional `expected_status_codes`; response body on output (8KB cap); `policy.allowed_webhook_host_suffixes` (Policy tab); optional `credential_id` (kind `webhook-outbound`) — do not put bearer/HMAC secrets in context |
+| Batch / loop | `for_each` | `mode` `child_workflow` (default) or `sequential` (`body_node_ids`, `checkpoint_every`); `wait_mode`; `max_concurrency`; `child_wait_timeout_seconds`; `fail_on_child_failure` waits until children are terminal; cap via `max_iterations` + policy `max_for_each_iterations` |
 | Step retries | `retry_policy` on side-effect nodes | `tool_call`, `send_email`, `send_teams`, `notify`, `webhook_outbound`, `context_store`, `file_artifact` |
 
 **Notify vs HOTL vs Send Teams:** `notify` → in-app bell (no run pause). `hotl` → approval-strategy channels, continues without pause. `send_teams` → Microsoft Teams conversation.

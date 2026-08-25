@@ -53,7 +53,9 @@ YAAIF Admin UI exposes **Open in IDE** on scenarios, skills, agents, and
 workflows. Choose **Open in Claude Code** to start a new Claude Code session
 with a prefilled prompt via Claude Code's
 [deep link scheme](https://code.claude.com/docs/en/deep-links.md):
-`claude-cli://open?repo=<owner>/<repo>&q=<prompt>`.
+`claude://code/new?q=<prompt>` in the Claude Desktop app (Admin UI omits
+`folder` because it cannot know each developer's local clone path). Terminal-only
+setups can use `claude-cli://open?q=<prompt>` instead.
 
 | Admin surface | Claude Code skill | Typical prompt fields |
 | --- | --- | --- |
