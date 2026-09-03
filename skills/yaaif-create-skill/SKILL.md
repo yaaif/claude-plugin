@@ -37,8 +37,9 @@ When `skill_id` is present:
 4. `yaaif_skill_map_agents_merge` if mapping changed
 5. `yaaif_skill_refresh` then `yaaif_skill_runtime_reload`
 6. If this skill is bound to a Scenario (`spec_id` in the prompt or a known
-   slot), call `yaaif_agent_spec_sync_from_objects` so the spec records the
-   change.
+   slot), keep editing through the skill tools. Do not finish with
+   `yaaif_agent_spec_sync_from_objects`; live skill-file edits become drift
+   until someone explicitly adopts them.
 
 ## Authoring
 
@@ -61,7 +62,8 @@ Read [references/frontmatter.md](references/frontmatter.md). Prefer lean chat sk
 8. Map: `yaaif_skill_map_agents_merge`
 9. `yaaif_skill_refresh` then `yaaif_skill_runtime_reload`
 10. If creating under a Scenario, pass `spec_id` + `slot_key` on
-    `yaaif_skill_create`, then `yaaif_agent_spec_sync_from_objects`
+    `yaaif_skill_create`. Binding is enough; do not call
+    `yaaif_agent_spec_sync_from_objects` as a default finish step.
 
 ### Fallback (REST only)
 

@@ -73,8 +73,10 @@ External HTTP stays at **Tool Call → MCP** — do not expect a raw HTTP palett
 6. Optional smoke: `yaaif_local_tool_call` → `list_ambient_workflows`
 7. `yaaif_ambient_test_trigger` → `yaaif_ambient_runs_list`
 8. If this workflow belongs to a Scenario, pass `spec_id` + `slot_key` on
-   create/update and finish with `yaaif_agent_spec_sync_from_objects`. After
-   editing `workflow_design` on the spec, use `yaaif_agent_spec_sync_to_objects`.
+   create/update. After editing `workflow_design` on the spec, apply with
+   `yaaif_agent_spec_sync_to_objects`. Do not finish with
+   `yaaif_agent_spec_sync_from_objects` unless the user asks to adopt live
+   catalog drift.
 
 ## Hand-off
 
