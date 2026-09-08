@@ -11,9 +11,10 @@ diagnostics, platform tools, and read-only operations support.
 ## Install
 
 ```bash
-npx -y @yaaif/platform-mcp@1.3.1 --install --client claude
+cd ~
+npx -y @yaaif/platform-mcp@1.3.2 --install --client claude
 claude plugin marketplace add yaaif/claude-plugin
-claude plugin install yaaif-platform
+claude plugin install yaaif-platform@yaaif
 ```
 
 The installer asks you to choose hosted `https://platform.yaaif.ai` or type
@@ -33,7 +34,7 @@ claude --plugin-dir /path/to/claude-plugin
 The plugin starts:
 
 ```text
-npx -y @yaaif/platform-mcp@1.3.1 --client claude
+npx -y @yaaif/platform-mcp@1.3.2 --client claude
 ```
 
 Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or
@@ -42,8 +43,8 @@ Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or
 
 > **Note:** `@yaaif/platform-mcp` must be on the public npm registry before a
 > marketplace install can start the bridge. See
-> [docs/npm-publish.md](docs/npm-publish.md). Until then, use a local
-> [monorepo override](#local-mcp-override).
+> [docs/npm-publish.md](docs/npm-publish.md). For bridge development, use a
+> [local MCP override](#local-mcp-override).
 
 ## Profiles and state
 
@@ -100,8 +101,15 @@ aliases match the Cursor plugin names and appear as `/yaaif-platform:<command>`.
 
 ## Local MCP override
 
-Until `@yaaif/platform-mcp` is published, or when developing the bridge, point
-Claude at the monorepo build (do not commit this path):
+When developing the bridge, clone [yaaif/cursor-plugin](https://github.com/yaaif/cursor-plugin),
+build `packages/mcp`, and point Claude at that `cli.js` (do not commit a
+machine-local path):
+
+```bash
+git clone https://github.com/yaaif/cursor-plugin.git
+cd cursor-plugin/packages/mcp
+npm install && npm run build
+```
 
 ```json
 {
@@ -109,7 +117,7 @@ Claude at the monorepo build (do not commit this path):
     "yaaif": {
       "command": "node",
       "args": [
-        "/path/to/yaaif-platform/integrations/cursor-plugin/packages/mcp/dist/cli.js",
+        "/path/to/cursor-plugin/packages/mcp/dist/cli.js",
         "--client",
         "claude"
       ]
@@ -117,8 +125,6 @@ Claude at the monorepo build (do not commit this path):
   }
 }
 ```
-
-Build first: `cd integrations/cursor-plugin/packages/mcp && npm install && npm run build`.
 
 ## Development and release
 
