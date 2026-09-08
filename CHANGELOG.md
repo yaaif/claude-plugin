@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+- Align plugin version with platform 1.3.2.
+
 ## 1.3.0
 
 - Align plugin version with `@yaaif/platform-mcp` 1.3.0 and the Cursor / Codex plugins.

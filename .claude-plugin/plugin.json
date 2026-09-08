@@ -3,7 +3,7 @@
   "name": "yaaif-platform",
   "displayName": "YAAIF",
   "description": "Authenticate to YAA\\F, plan use cases, create and maintain scenarios (Agent Specs), and create skills, MCP deployments, and ambient workflows from Claude Code.",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "author": {
     "name": "YAA\\F / BeezLabs",
     "email": "support@yaaif.com"

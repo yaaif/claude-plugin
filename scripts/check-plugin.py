@@ -9,7 +9,7 @@ import os
 import sys
 from pathlib import Path
 
-PLUGIN_VERSION = "1.3.0"
+PLUGIN_VERSION = "1.3.2"
 MCP_PACKAGE = "@yaaif/platform-mcp@1.3.3"
 
 EXPECTED_SKILLS = (

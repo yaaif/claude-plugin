@@ -5,7 +5,7 @@ Claude-Code-native skills and slash commands for authenticated YAAIF planning,
 skill creation, MCP deployment, scenario lifecycle, ambient workflows,
 diagnostics, platform tools, and read-only operations support.
 
-**Version:** 1.3.0  
+**Version:** 1.3.2  
 **Logo:** [`assets/logo.svg`](assets/logo.svg)
 
 ## Install
