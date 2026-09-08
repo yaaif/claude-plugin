@@ -75,6 +75,18 @@ When local tools are unavailable (doctor `local_tools` failed):
 4. `yaaif_skill_validate` (optional)
 5. `yaaif_skill_refresh` then `yaaif_skill_runtime_reload`
 
+## MCP subset handoff
+
+When the prompt includes `mcp_server_id` (optional `tools[]` / `prompts[]` / `resources[]` / `skill_id`):
+
+1. Refresh the server if the names are missing (`yaaif_mcp_server_refresh` or catalog list).
+2. Look up existing generated skills for this server. Reuse `skill_id` when present.
+3. Draft a proposed pack: id, name, description, selected capabilities, and frontmatter (`allowed-tools`, `mcp-servers`; optional `allowed-prompts`, `allowed-resources`, and `allowed-tools: [server-slug:*]` wildcards). Use only listed or catalog names. Do not invent tool, prompt, or resource names.
+4. Present the plan and **wait for explicit confirmation**. Do not call `skill_generate_from_mcp_server`, `yaaif_skill_create`, or enable/map until the operator confirms.
+5. After confirmation, upsert with `skill_generate_from_mcp_server` (local tool) or `POST /api/mcp-tools/servers/:id/generate-skill`. Do **not** use `skill_create_guided_draft` for this path.
+6. The upsert writes a **disabled, unmapped** pack (`metadata.source: mcp_generated`). Do not enable or map unless the operator asks.
+7. After the upsert: `yaaif_skill_tools_check` then validate. Enable + `yaaif_skill_map_agents_merge` only after review.
+
 ## File-aware skills
 
 Call `yaaif_dev_session_ensure`, then exercise `yaaif_files_list` / `yaaif_load_artifacts` / `yaaif_file_load_context` while drafting. Put `files_list` / `load_artifacts` / `file_load_context` (and `file_share_link` if needed) in frontmatter. Files may be referenced by durable `file_id` or ADK artifact name (+ optional `version`).
