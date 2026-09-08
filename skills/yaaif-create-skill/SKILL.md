@@ -2,8 +2,8 @@
 name: yaaif-create-skill
 description: >-
   Author or maintain a YAA\F SKILL.md pack and load it into the tenant catalog
-  via the yaaif Claude Code MCP bridge. Use when Admin UI Open in Claude Code
-  selected a skill_id, or when creating a new skill. Prefers platform
+  via the yaaif Claude Code MCP bridge. Use when Admin UI Open in Claude Code / Create in
+  Claude Code selected a skill_id, or when creating a new skill. Prefers platform
   local skill lifecycle tools when available.
 ---
 

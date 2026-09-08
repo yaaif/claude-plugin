@@ -4,7 +4,9 @@
 
 | Version | Supported |
 |---------|-----------|
-| `0.1.x` | Yes |
+| `1.3.x` | Yes |
+| `1.1.x` | No |
+| `0.1.x` | No |
 
 ## Threat model (summary)
 
@@ -12,6 +14,7 @@ This Claude Code plugin ships:
 
 - Markdown skills and docs
 - A `.mcp.json` declaration that launches a local **stdio** MCP bridge via `npx @yaaif/platform-mcp@<version> --client claude`, authenticating to a customer-configured YAA\F environment
+- Shared Node installer: `npx @yaaif/platform-mcp --install --client claude` (optional `--offline`)
 
 It does **not** ship opaque binaries, remote install scripts, or embedded credentials. The MCP bridge itself is a shared package (source in
 [`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp)) used identically by the Cursor, Codex, and Claude Code plugins.

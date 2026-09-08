@@ -65,8 +65,8 @@ When the prompt includes `spec_id` (and usually `slug` / `name`):
 If there is no `spec_id`:
 
 1. `yaaif_agent_spec_list` (`q` from the use-case name). Reuse if a match exists.
-2. For a multi-capability use case, invoke the `yaaif-plan-usecase` skill and
-   create the spec immediately after plan approval.
+2. For a multi-capability use case, prefer `yaaif-plan-usecase` / `/yaaif-platform:yaaif-plan`
+   and create the spec immediately after plan approval.
 3. Otherwise create now with `yaaif_agent_spec_create`:
    - `slug` kebab-case, unique in the tenant
    - `name`, `description`
@@ -82,7 +82,7 @@ If there is no `spec_id`:
 
 ## Mode C — apply spec → objects (or adopt live drift)
 
-When the user asks to keep the scenario in sync, use this skill and:
+`/yaaif-platform:yaaif-sync-scenario` or when the user asks to keep the scenario in sync:
 
 1. Resolve `spec_id` (prompt, list, or last selected scenario).
 2. `yaaif_agent_spec_get` + readiness + coverage.
@@ -106,3 +106,6 @@ When the user asks to keep the scenario in sync, use this skill and:
 - Do not hardcode tenant business copy into YAA\F core services; keep it in
   skills / MCP tools / this spec’s segments.
 - Credentials stay on MCP server profiles, not skill-pack `credentials.yaml`.
+- Live update/delete of bound agents, ambient agents, workflows, and MCP
+  servers is observe-by-default (drift only). Do not ask to flip a tenant to
+  `require` until Apply/Adopt is in regular use; `require` 409s those writes.

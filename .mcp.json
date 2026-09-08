@@ -4,10 +4,23 @@
       "command": "npx",
       "args": [
         "-y",
-        "@yaaif/platform-mcp@1.3.0",
+        "@yaaif/platform-mcp@1.3.1",
         "--client",
         "claude"
-      ]
+      ],
+      "env": {
+        "YAAIF_PLATFORM_PROFILE": "${user_config.YAAIF_PLATFORM_PROFILE}",
+        "YAAIF_OIDC_AUTHORITY": "${user_config.YAAIF_OIDC_AUTHORITY}",
+        "YAAIF_API_BASE_URL": "${user_config.YAAIF_API_BASE_URL}",
+        "YAAIF_AGENT_BASE_URL": "${user_config.YAAIF_AGENT_BASE_URL}",
+        "YAAIF_CONTROL_PLANE_BASE_URL": "${user_config.YAAIF_CONTROL_PLANE_BASE_URL}",
+        "YAAIF_APPROVAL_BASE_URL": "${user_config.YAAIF_APPROVAL_BASE_URL}",
+        "YAAIF_DEFAULT_TENANT_ID": "${user_config.YAAIF_DEFAULT_TENANT_ID}",
+        "YAAIF_OIDC_CLIENT_ID": "${user_config.YAAIF_OIDC_CLIENT_ID}",
+        "YAAIF_EXTRA_CA_FILE": "${user_config.YAAIF_EXTRA_CA_FILE}",
+        "YAAIF_CLIENT_CERT_FILE": "${user_config.YAAIF_CLIENT_CERT_FILE}",
+        "YAAIF_CLIENT_KEY_FILE": "${user_config.YAAIF_CLIENT_KEY_FILE}"
+      }
     }
   }
 }

@@ -1,17 +1,15 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "yaaif-platform",
   "displayName": "YAAIF",
   "description": "Authenticate to YAA\\F, plan use cases, create and maintain scenarios (Agent Specs), and create skills, MCP deployments, and ambient workflows from Claude Code.",
-  "version": "0.1.0",
+  "version": "1.3.0",
   "author": {
     "name": "YAA\\F / BeezLabs",
     "email": "support@yaaif.com"
   },
   "homepage": "https://github.com/yaaif/claude-plugin",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yaaif/claude-plugin"
-  },
+  "repository": "https://github.com/yaaif/claude-plugin",
   "license": "Apache-2.0",
   "keywords": [
     "yaaif",
@@ -21,5 +19,71 @@
     "workflows",
     "keycloak",
     "sap"
-  ]
+  ],
+  "userConfig": {
+    "YAAIF_PLATFORM_PROFILE": {
+      "type": "string",
+      "title": "Platform profile",
+      "description": "Named profile: hosted | local-hybrid | local | custom id (overrides URL defaults when set)",
+      "default": "hosted"
+    },
+    "YAAIF_OIDC_AUTHORITY": {
+      "type": "string",
+      "title": "OIDC authority",
+      "description": "Keycloak realm URL (optional if using a platform profile)",
+      "default": "https://platform.yaaif.ai/auth/realms/yaaif"
+    },
+    "YAAIF_API_BASE_URL": {
+      "type": "string",
+      "title": "API server base URL",
+      "description": "api-server origin (no path suffix)",
+      "default": "https://platform.yaaif.ai"
+    },
+    "YAAIF_AGENT_BASE_URL": {
+      "type": "string",
+      "title": "Agent service base URL",
+      "description": "agent-service origin",
+      "default": "https://platform.yaaif.ai/agent-service"
+    },
+    "YAAIF_CONTROL_PLANE_BASE_URL": {
+      "type": "string",
+      "title": "Control plane base URL",
+      "description": "control-plane-service origin (desktop workers / skill mappings)",
+      "default": "https://platform.yaaif.ai/control-plane-service"
+    },
+    "YAAIF_APPROVAL_BASE_URL": {
+      "type": "string",
+      "title": "Approval service base URL",
+      "description": "approval-service origin (strategies for HITL ambient)",
+      "default": "https://platform.yaaif.ai/approval-service"
+    },
+    "YAAIF_DEFAULT_TENANT_ID": {
+      "type": "string",
+      "title": "Default tenant ID",
+      "description": "Optional tenant UUID used when session has none set",
+      "default": ""
+    },
+    "YAAIF_OIDC_CLIENT_ID": {
+      "type": "string",
+      "title": "OIDC client ID",
+      "description": "Public Keycloak client (default yaaif-claude)",
+      "default": "yaaif-claude"
+    },
+    "YAAIF_EXTRA_CA_FILE": {
+      "type": "file",
+      "title": "Extra CA PEM file",
+      "description": "Optional absolute path to Traefik/mkcert/corporate root CA PEM (local *.yaaif.local). Auto-discovered for local profiles when unset."
+    },
+    "YAAIF_CLIENT_CERT_FILE": {
+      "type": "file",
+      "title": "Client cert PEM (mTLS)",
+      "description": "Optional absolute path to client certificate PEM for mTLS"
+    },
+    "YAAIF_CLIENT_KEY_FILE": {
+      "type": "file",
+      "title": "Client key PEM (mTLS)",
+      "description": "Optional absolute path to client private key PEM for mTLS",
+      "sensitive": true
+    }
+  }
 }

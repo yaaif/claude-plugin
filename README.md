@@ -1,16 +1,28 @@
 # YAAIF for Claude Code
 
 The YAAIF Claude Code plugin provides a local stdio MCP bridge and
-Claude-Code-native skills for authenticated YAAIF planning, skill creation,
-MCP deployment, scenario lifecycle, ambient workflows, diagnostics, platform
-tools, and read-only operations support.
+Claude-Code-native skills and slash commands for authenticated YAAIF planning,
+skill creation, MCP deployment, scenario lifecycle, ambient workflows,
+diagnostics, platform tools, and read-only operations support.
+
+**Version:** 1.3.0  
+**Logo:** [`assets/logo.svg`](assets/logo.svg)
 
 ## Install
 
 ```bash
+npx -y @yaaif/platform-mcp@1.3.1 --install --client claude
 claude plugin marketplace add yaaif/claude-plugin
 claude plugin install yaaif-platform
 ```
+
+The installer asks you to choose hosted `https://platform.yaaif.ai` or type
+another YAAIF URL. Non-interactive: `--yaaif-url https://your.yaaif.host` or
+`--profile hosted`.
+
+On enable, Claude Code prompts for `userConfig` values (platform profile, OIDC,
+API URLs, tenant, CA, mTLS). Those become `YAAIF_*` environment variables for
+the MCP process. You can also set the same variables in the shell.
 
 For local development, load the plugin directly without installing it:
 
@@ -21,16 +33,17 @@ claude --plugin-dir /path/to/claude-plugin
 The plugin starts:
 
 ```text
-npx -y @yaaif/platform-mcp@1.3.0 --client claude
+npx -y @yaaif/platform-mcp@1.3.1 --client claude
 ```
 
-The process inherits `YAAIF_*` configuration from your environment. Node.js
-20 or later is required. Run `yaaif_ensure_session` in a new session to use
-browser PKCE login, or `yaaif_login_device` where browser callback login is
-not available.
+Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or
+`yaaif_ensure_session`) in a new session for browser PKCE login, or
+`yaaif_login_device` where a browser callback is not available.
 
-> **Note:** `@yaaif/platform-mcp` must be published to npm before this
-> plugin can start (see [Development and release](#development-and-release)).
+> **Note:** `@yaaif/platform-mcp` must be on the public npm registry before a
+> marketplace install can start the bridge. See
+> [docs/npm-publish.md](docs/npm-publish.md). Until then, use a local
+> [monorepo override](#local-mcp-override).
 
 ## Profiles and state
 
@@ -43,9 +56,9 @@ Cursor state in `~/.yaaif/cursor` or Codex state in `~/.yaaif/codex`.
 | `local` | OIDC and APIs on the local stack |
 | `local-hybrid` | Hosted/tunnel OIDC with local APIs |
 
-Override endpoints, tenant, CA, and mTLS with the existing `YAAIF_*`
-environment variables. In particular, use `YAAIF_EXTRA_CA_FILE` for a local CA
-and `YAAIF_CLIENT_CERT_FILE` / `YAAIF_CLIENT_KEY_FILE` for mTLS.
+Override endpoints, tenant, CA, and mTLS with plugin `userConfig` or `YAAIF_*`
+environment variables. Use `YAAIF_EXTRA_CA_FILE` for a local CA and
+`YAAIF_CLIENT_CERT_FILE` / `YAAIF_CLIENT_KEY_FILE` for mTLS.
 
 ## Admin UI handoffs
 
@@ -65,37 +78,64 @@ setups can use `claude-cli://open?q=<prompt>` instead.
 | Agents | MCP agent tools | `agent_id`, `agent_type` |
 
 Install this plugin before using Admin UI handoffs. Authenticate with
-`yaaif-auth`, then follow the skill named in the prompt. Claude Code state
-stays in `~/.yaaif/claude` and never shares Cursor or Codex profiles.
+`/yaaif-platform:yaaif-login`, then follow the skill named in the prompt.
 
-## Skills
+## Skills and commands
 
-| Skill | Purpose |
-| --- | --- |
-| `yaaif-auth` | Platform profile + login + tenant |
-| `yaaif-doctor` | Connectivity / TLS / auth diagnostics |
-| `yaaif-plan-usecase` | Use-case plan → approve → create Scenario + agents/skills/workflows |
-| `yaaif-scenario` | Create or maintain a Scenario (Agent Spec); Admin UI **Open in Claude Code** |
-| `yaaif-create-skill` | Author + load skill (prefers platform local lifecycle tools) |
-| `yaaif-platform-tools` | Discover/call agent-service built-in local tools |
-| `yaaif-ops-support` | Read-only incident triage (session/ambient/desktop) |
-| `yaaif-create-mcp` | Scaffold + deploy MCP (compose or k8s GitOps) + API key bind |
-| `yaaif-create-ambient` | Ambient workflows; Admin UI **Open in Claude Code** for `workflow_id` |
+Skills are also available as `/yaaif-platform:<skill-name>`. Short command
+aliases match the Cursor plugin names and appear as `/yaaif-platform:<command>`.
 
-Each skill is invoked as `/yaaif-platform:<skill-name>`, e.g. `/yaaif-platform:yaaif-doctor`.
+| Skill | Short command | Purpose |
+| --- | --- | --- |
+| `yaaif-auth` | `/yaaif-platform:yaaif-login` | Platform profile + login + tenant |
+| `yaaif-doctor` | `/yaaif-platform:yaaif-doctor` | Connectivity / TLS / auth diagnostics |
+| `yaaif-plan-usecase` | `/yaaif-platform:yaaif-plan` | Use-case plan → approve → create Scenario + objects |
+| `yaaif-scenario` | `/yaaif-platform:yaaif-scenario` | Create or maintain a Scenario; Admin UI **Open in Claude Code** |
+| — | `/yaaif-platform:yaaif-sync-scenario` | Apply spec → objects, or explicitly adopt live drift |
+| `yaaif-create-skill` | `/yaaif-platform:yaaif-new-skill` | Author + load skill |
+| `yaaif-create-mcp` | `/yaaif-platform:yaaif-new-mcp` | Scaffold + deploy MCP + API key bind |
+| `yaaif-create-ambient` | `/yaaif-platform:yaaif-new-workflow` | Ambient workflows; Admin UI handoff for `workflow_id` |
+| `yaaif-platform-tools` | `/yaaif-platform:yaaif-platform-tools` | Discover/call agent-service built-in local tools |
+| `yaaif-ops-support` | `/yaaif-platform:yaaif-ops` | Read-only incident triage |
+
+## Local MCP override
+
+Until `@yaaif/platform-mcp` is published, or when developing the bridge, point
+Claude at the monorepo build (do not commit this path):
+
+```json
+{
+  "mcpServers": {
+    "yaaif": {
+      "command": "node",
+      "args": [
+        "/path/to/yaaif-platform/integrations/cursor-plugin/packages/mcp/dist/cli.js",
+        "--client",
+        "claude"
+      ]
+    }
+  }
+}
+```
+
+Build first: `cd integrations/cursor-plugin/packages/mcp && npm install && npm run build`.
 
 ## Development and release
 
-This plugin ships no source code of its own — the MCP tool surface (~184
-`yaaif_*` tools) lives in [`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp),
-published as `@yaaif/platform-mcp` and shared across the Cursor, Codex, and
-Claude Code plugins via a `--client cursor|codex|claude` flag.
+This plugin ships no MCP source — the tool surface lives in
+[`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp),
+published as `@yaaif/platform-mcp` and shared across Cursor, Codex, and Claude
+Code via `--client cursor|codex|claude`.
 
-Before installing a release candidate, run `claude plugin validate .` against
-this repository.
+```bash
+python3 scripts/check-plugin.py --require-skill-sync
+claude plugin validate . --strict
+```
 
 Release order: publish `@yaaif/platform-mcp@<version>` from `cursor-plugin` →
-bump the version pinned in this repo's [`.mcp.json`](.mcp.json) → install and
-smoke-test locally with `claude --plugin-dir` → submit the tested repository
-to the Claude Code plugin directory (see
+confirm with `npm view @yaaif/platform-mcp version` → bump the pin in
+[`.mcp.json`](.mcp.json) → install and smoke-test with `claude --plugin-dir` →
+submit the tested repository to the Claude Code plugin directory (see
 [`docs.claude.com`](https://docs.claude.com) for current submission steps).
+
+See [CHANGELOG.md](CHANGELOG.md) and [docs/npm-publish.md](docs/npm-publish.md).

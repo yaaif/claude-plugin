@@ -127,8 +127,8 @@ needs mapping. After execute, preview catalog sync with
 record passing evidence for every `must` requirement, refresh readiness, and
 only then publish and transition to `active`. `yaaif_plan_execution_resume`
 refreshes readiness/version and halts for conflicts or failed evidence. Later object edits in
-Claude Code keeps the task on the spec automatically; invoke the `yaaif-scenario`
-skill to pull or push the full inventory.
+Claude Code stay on the spec automatically; use `/yaaif-platform:yaaif-sync-scenario` to pull or
+push the full inventory.
 
 Before mutating, call `yaaif_plan_execution_save` with the ordered steps (status
 `pending`). After each successful/failed step call
