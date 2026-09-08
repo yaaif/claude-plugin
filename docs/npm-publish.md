@@ -4,8 +4,8 @@ The Claude Code plugin does **not** bundle MCP source. Marketplace and
 `npx` installs start:
 
 ```text
-npx -y @yaaif/platform-mcp@1.3.1 --client claude
-npx -y @yaaif/platform-mcp@1.3.1 --install --client claude
+npx -y @yaaif/platform-mcp@1.3.3 --client claude
+npx -y @yaaif/platform-mcp@1.3.3 --install --client claude
 ```
 
 That package is built from
@@ -38,7 +38,7 @@ returns 404.
    npm view @yaaif/platform-mcp version
    ```
 
-   Expected: `1.3.0` (or the version pinned in this repo’s [`.mcp.json`](../.mcp.json)).
+   Expected: `1.3.3` (or the version pinned in this repo’s [`.mcp.json`](../.mcp.json)).
 
 3. Keep this plugin’s `.mcp.json` pin in lockstep with the published version.
    Do not bump the pin until `npm view` reports that version.

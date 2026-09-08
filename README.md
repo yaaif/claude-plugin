@@ -12,7 +12,7 @@ diagnostics, platform tools, and read-only operations support.
 
 ```bash
 cd ~
-npx -y @yaaif/platform-mcp@1.3.2 --install --client claude
+npx -y @yaaif/platform-mcp@1.3.3 --install --client claude
 claude plugin marketplace add yaaif/claude-plugin
 claude plugin install yaaif-platform@yaaif
 ```
@@ -34,7 +34,7 @@ claude --plugin-dir /path/to/claude-plugin
 The plugin starts:
 
 ```text
-npx -y @yaaif/platform-mcp@1.3.2 --client claude
+npx -y @yaaif/platform-mcp@1.3.3 --client claude
 ```
 
 Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or

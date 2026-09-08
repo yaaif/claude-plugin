@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 PLUGIN_VERSION = "1.3.0"
-MCP_PACKAGE = "@yaaif/platform-mcp@1.3.1"
+MCP_PACKAGE = "@yaaif/platform-mcp@1.3.3"
 
 EXPECTED_SKILLS = (
     "yaaif-auth",
