@@ -138,12 +138,18 @@ Before mutating, call `yaaif_plan_execution_save` with the ordered steps (status
 
 Follow this order. Skip steps the plan marks as reuse / not needed.
 
-1. **MCP** — If the plan lists missing tools, use `yaaif-create-mcp`. Preflight
-   `yaaif_deployment_settings_status`, then create/deploy (compose or
-   kubernetes_gitops). Verify with `yaaif_mcp_tools_list`. When the MCP calls
-   platform APIs (context-store, approvals read, ambient HTTP, …), also
-   `yaaif_api_key_create` + `yaaif_api_key_bind_deployment` (never platform S2S
-   in MCP pods).
+1. **MCP** — If the plan lists missing tools, use `yaaif-create-mcp`.
+   HTTP/SSE servers: preflight `yaaif_deployment_settings_status`, then
+   create/deploy (compose or kubernetes_gitops). Command/stdio servers (desktop
+   Package Registry): `yaaif_desktop_tool_package_inspect` +
+   `yaaif_desktop_tool_package_publish` from the local codebase (do not docker-deploy),
+   then `yaaif_desktop_tool_package_worker_status` and
+   `yaaif_desktop_tool_package_install` / `_upgrade` on target workers
+   (`_uninstall` removes from the PC only — registry delete is separate).
+   Verify with `yaaif_mcp_tools_list` / `yaaif_desktop_tool_packages_list`. When
+   the MCP calls platform APIs (context-store, approvals read, ambient HTTP, …),
+   also `yaaif_api_key_create` + `yaaif_api_key_bind_deployment` (never platform
+   S2S in MCP pods).
 2. **Agents** — `yaaif_agent_create` for each planned agent with the correct
    `agent_type` (`skills` | `workflow` | `desktop`). Reuse existing ids when
    marked reuse. Use `yaaif_agent_update` to revise name/goal/`skill_ids` /
@@ -161,9 +167,11 @@ Follow this order. Skip steps the plan marks as reuse / not needed.
 6. **Map skills → agents** — Prefer **`yaaif_skill_map_agents_merge`** (safe
    union). Only use `yaaif_skill_map_agents` when intentionally replacing the
    full list. Ensure skills are enabled.
-7. **Desktop worker mappings** — For each desktop skill, if worker ids are known
-   (from plan or `yaaif_desktop_workers_list`):
-   `yaaif_desktop_skill_mapping_set` with `{ skill_id, worker_ids }`.
+7. **Desktop worker mappings** — For command MCP packages, install/upgrade on
+   workers first (`yaaif_desktop_tool_package_install` / `_upgrade`). Then for
+   each desktop skill, if worker ids are known (from plan or
+   `yaaif_desktop_workers_list`): `yaaif_desktop_skill_mapping_set` with
+   `{ skill_id, worker_ids }`.
 8. **Reload** — `yaaif_skill_refresh` and/or `yaaif_skill_runtime_reload` when
    skills changed.
 9. **Verify** — `yaaif_plan_verify` with expected names/ids from the plan; then

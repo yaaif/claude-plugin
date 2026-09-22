@@ -26,7 +26,7 @@ existing agent, skill, MCP tool, or workflow already matches.
 1. **Interactive-only + existing MCP tools** → chat skill + chat agent only. No ambient.
 2. **Chat starts long-running work** → chat orchestration skill + one ambient graph + workflow agent + chat agent.
 3. **Batch / schedule / HITL without chat** → ambient only (workflow + ambient agents). Add a chat skill only if operators need chat trigger or status.
-4. **SAP GUI / local UI** → desktop skill + desktop agent + `yaaif_desktop_skill_mapping_set` after `yaaif_desktop_workers_list`.
+4. **SAP GUI / local UI** → command/stdio MCP Package Registry (`yaaif_desktop_tool_package_publish` from the local codebase) + `yaaif_desktop_tool_package_install` / `_upgrade` on workers + desktop skill + desktop agent + `yaaif_desktop_skill_mapping_set` after `yaaif_desktop_workers_list`.
 5. **HITL ambient** → create/publish approval strategy; put `approval_strategy_id` on approval nodes.
 6. **Missing APIs** → plan MCP tools before ambient/chat that depend on them.
 7. **Overlap with catalog** → mark component as **reuse** with existing id/name; do not create duplicates.

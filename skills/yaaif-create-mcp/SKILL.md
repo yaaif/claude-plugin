@@ -1,9 +1,10 @@
 ---
 name: yaaif-create-mcp
 description: >-
-  Scaffold a YAA\F MCP server, deploy via mcp-deployments (docker_compose or
-  kubernetes_gitops), register tools, and mint/bind scoped API keys when the MCP
-  calls platform APIs. For customer/partner workspaces without monorepo access.
+  Scaffold a YAA\F MCP server. HTTP servers deploy via mcp-deployments
+  (docker_compose or kubernetes_gitops). Command/stdio servers publish to the
+  desktop Package Registry from a local codebase. Mint/bind scoped API keys when
+  the MCP calls platform APIs. For customer/partner workspaces without monorepo access.
 ---
 
 # Create MCP tools and deploy on YAA\F
@@ -11,21 +12,35 @@ description: >-
 ```
 Task Progress:
 - [ ] 1. Auth + tenant
-- [ ] 2. Deployment settings preflight
+- [ ] 2. Choose HTTP deploy vs command/stdio package
 - [ ] 3. Design tool contracts
-- [ ] 4. Scaffold service
-- [ ] 5. Build/push image
-- [ ] 6. Create + deploy + observe
-- [ ] 7. Register
-- [ ] 8. API key (if MCP → platform APIs)
-- [ ] 9. Verify catalog
+- [ ] 4. Scaffold / implement
+- [ ] 5a. HTTP: image + yaaif_mcp_deployment_*
+- [ ] 5b. Command: yaaif_desktop_tool_package_publish
+- [ ] 6. Register / install onto workers
+- [ ] 7. API key (if MCP → platform APIs)
+- [ ] 8. Verify catalog
 ```
 
 ## Prerequisites
 
 `yaaif-auth` completed.
 
-## Preflight
+## Choose transport
+
+| Runtime | Path |
+|---------|------|
+| Streamable HTTP / SSE (container URL) | Deployment-service below |
+| Local command / stdio on a desktop worker (`.exe`, `node`, `python`) | [references/desktop-packages.md](references/desktop-packages.md) |
+
+Command MCP (SAP GUI, Node stdio): **do not** `yaaif_mcp_deployment_create`. Inspect then publish:
+
+1. `yaaif_desktop_tool_package_inspect` (`source_dir` absolute)
+2. `yaaif_desktop_tool_package_publish` (`mode` `add` \| `update` \| `upsert`)
+3. Worker lifecycle: `yaaif_desktop_tool_package_worker_status` → `yaaif_desktop_tool_package_install` / `_upgrade` / `_uninstall`
+4. Registry delete: `yaaif_desktop_tool_package_delete` (does not uninstall from workers)
+
+## Preflight (HTTP only)
 
 1. `yaaif_deployment_settings_status` — confirm docker / gitops / kubernetes / agent health
 2. `yaaif_deployment_settings_get` — note `default_deployment_method`
@@ -83,4 +98,5 @@ Skip this section when the MCP only talks to external systems and never calls YA
 ## Verify
 
 `yaaif_mcp_tools_list` — confirm exact tool names before wiring skills/workflows.
+`yaaif_desktop_tool_packages_list` — confirm command MCP packages in the Package Registry.
 `yaaif_api_key_list` — confirm credential linked when platform calls are in scope.
