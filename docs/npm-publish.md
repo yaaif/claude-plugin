@@ -9,7 +9,7 @@ npx -y @yaaif/platform-mcp@1.3.3 --install --client claude
 ```
 
 That package is built from
-[`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp).
+[`yaaif/platform-mcp`](https://github.com/yaaif/platform-mcp).
 Until it is on the public npm registry, Claude and Codex marketplace installs
 cannot start the bridge. As of this writing `npm view @yaaif/platform-mcp`
 returns 404.
@@ -23,10 +23,9 @@ returns 404.
    npm whoami
    ```
 
-2. From a cursor-plugin checkout:
+2. From a platform-mcp checkout:
 
    ```bash
-   cd packages/mcp
    npm test
    npm run build
    npm publish --access public
@@ -51,8 +50,8 @@ returns 404.
 
    Then `/yaaif-platform:yaaif-doctor`.
 
-Full Cursor-side notes:
-[`cursor-plugin/docs/npm-publish.md`](https://github.com/yaaif/cursor-plugin/blob/main/docs/npm-publish.md).
+Full publish notes:
+[`platform-mcp`](https://github.com/yaaif/platform-mcp).
 
 ## Local development before npm publish
 
@@ -64,7 +63,7 @@ Point `.mcp.json` (or a local override) at the monorepo build instead of npx:
     "yaaif": {
       "command": "node",
       "args": [
-        "/path/to/yaaif-platform/integrations/cursor-plugin/packages/mcp/dist/cli.js",
+        "/path/to/yaaif-platform/integrations/platform-mcp/dist/cli.js",
         "--client",
         "claude"
       ]
@@ -73,5 +72,5 @@ Point `.mcp.json` (or a local override) at the monorepo build instead of npx:
 }
 ```
 
-Build first: `cd integrations/cursor-plugin/packages/mcp && npm install && npm run build`.
+Build first: `cd integrations/platform-mcp && npm install && npm run build`.
 Do not commit a machine-local path to this repository.

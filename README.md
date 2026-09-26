@@ -101,13 +101,13 @@ aliases match the Cursor plugin names and appear as `/yaaif-platform:<command>`.
 
 ## Local MCP override
 
-When developing the bridge, clone [yaaif/cursor-plugin](https://github.com/yaaif/cursor-plugin),
-build `packages/mcp`, and point Claude at that `cli.js` (do not commit a
+When developing the bridge, clone [yaaif/platform-mcp](https://github.com/yaaif/platform-mcp),
+build it, and point Claude at that `cli.js` (do not commit a
 machine-local path):
 
 ```bash
-git clone https://github.com/yaaif/cursor-plugin.git
-cd cursor-plugin/packages/mcp
+git clone https://github.com/yaaif/platform-mcp.git
+cd platform-mcp
 npm install && npm run build
 ```
 
@@ -117,7 +117,7 @@ npm install && npm run build
     "yaaif": {
       "command": "node",
       "args": [
-        "/path/to/cursor-plugin/packages/mcp/dist/cli.js",
+        "/path/to/platform-mcp/dist/cli.js",
         "--client",
         "claude"
       ]
@@ -129,7 +129,7 @@ npm install && npm run build
 ## Development and release
 
 This plugin ships no MCP source — the tool surface lives in
-[`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp),
+[`yaaif/platform-mcp`](https://github.com/yaaif/platform-mcp),
 published as `@yaaif/platform-mcp` and shared across Cursor, Codex, and Claude
 Code via `--client cursor|codex|claude`.
 
@@ -138,7 +138,7 @@ python3 scripts/check-plugin.py --require-skill-sync
 claude plugin validate . --strict
 ```
 
-Release order: publish `@yaaif/platform-mcp@<version>` from `cursor-plugin` →
+Release order: publish `@yaaif/platform-mcp@<version>` from [yaaif/platform-mcp](https://github.com/yaaif/platform-mcp) →
 confirm with `npm view @yaaif/platform-mcp version` → bump the pin in
 [`.mcp.json`](.mcp.json) → install and smoke-test with `claude --plugin-dir` →
 submit the tested repository to the Claude Code plugin directory (see

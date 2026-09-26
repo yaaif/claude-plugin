@@ -17,7 +17,7 @@ This Claude Code plugin ships:
 - Shared Node installer: `npx @yaaif/platform-mcp --install --client claude` (optional `--offline`)
 
 It does **not** ship opaque binaries, remote install scripts, or embedded credentials. The MCP bridge itself is a shared package (source in
-[`cursor-plugin/packages/mcp`](https://github.com/yaaif/cursor-plugin/tree/main/packages/mcp)) used identically by the Cursor, Codex, and Claude Code plugins.
+[`yaaif/platform-mcp`](https://github.com/yaaif/platform-mcp)) used identically by the Cursor, Codex, and Claude Code plugins.
 
 ### Auth
 
@@ -44,5 +44,5 @@ Email **security@yaaif.com** (or your BeezLabs security contact) with reproducti
 ## Marketplace review notes
 
 - Runtime is Node executing `npx @yaaif/platform-mcp@<version> --client claude` from the public npm registry
-- Source under `cursor-plugin/packages/mcp/src/` can be cross-checked against the published package
+- Source in [yaaif/platform-mcp](https://github.com/yaaif/platform-mcp) can be cross-checked against the published package
 - No secrets are required in this plugin repo; `YAAIF_*` environment variables hold environment URLs only
