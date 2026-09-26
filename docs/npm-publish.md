@@ -10,9 +10,9 @@ npx -y @yaaif/platform-mcp@1.3.5 --install --client claude
 
 That package is built from
 [`yaaif/platform-mcp`](https://github.com/yaaif/platform-mcp).
-Until it is on the public npm registry, Claude and Codex marketplace installs
-cannot start the bridge. As of this writing `npm view @yaaif/platform-mcp`
-returns 404.
+`@yaaif/platform-mcp@1.3.5` is on the public npm registry
+(`npm view @yaaif/platform-mcp version`). Marketplace installs start the
+bridge from that pin.
 
 ## Publish checklist (npm org access required)
 
