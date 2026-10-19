@@ -21,3 +21,5 @@ YAAIF Admin UI **Open in Claude Code** launches `claude://code/new?q=…` (Claud
 - Invoke the matching bundled skill (`/yaaif-platform:yaaif-scenario`, `/yaaif-platform:yaaif-create-skill`, `/yaaif-platform:yaaif-create-ambient`, or agent APIs) and maintain the selected catalog object — do not create duplicates.
 
 Admin UI omits `repo` / `cwd` because it cannot know each developer's local clone path. Run `claude` once in your project directory if you want future `repo=` handoffs from other tools.
+
+For tenant guardrails, harness settings, budgets, agent policy assignments or policy-related failure remediation, use `yaaif-governance`. Discover effective permissions first; preview changes and obtain explicit confirmation of the exact proposal before apply.

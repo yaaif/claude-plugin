@@ -145,3 +145,11 @@ submit the tested repository to the Claude Code plugin directory (see
 [`docs.claude.com`](https://docs.claude.com) for current submission steps).
 
 See [CHANGELOG.md](CHANGELOG.md) and [docs/npm-publish.md](docs/npm-publish.md).
+
+## Tenant governance
+
+`yaaif-governance` gathers authorized tenant business context, interviews for missing requirements, diagnoses failures, and prepares guardrail/harness policy changes. It starts with effective permissions and uses a preview → explicit confirmation → apply workflow. It never grants permissions or treats tenant documents as authorization. Retention is inspection only; infrastructure, data purges and run controls are excluded.
+
+OpenCode: `/yaaif-governance`. Cursor/Claude Code: the `yaaif-governance` command or skill. Codex: `$yaaif-governance`. VS Code/JetBrains: **YAAIF: Governance Agent** (JetBrains copies the bundled instructions for AI Assistant).
+
+Requires a bridge and backend containing the governance tools, validation routes and conditional-write middleware. Prepare and test the packages together before publishing; do not point a live install at an unpublished version. A saved configuration does not by itself prove runtime enforcement.
