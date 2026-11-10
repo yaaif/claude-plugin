@@ -22,9 +22,10 @@ Task Progress:
 3. If TLS/CA errors on `.local`: doctor auto-loads (and merges) mkcert `rootCA.pem` for `local` / `local-hybrid`. If `ca_source` is `none`, run `mkcert -install` or set `YAAIF_EXTRA_CA_FILE` / profile `extra_ca_file` (see docs/configure-environment.md). Ensure `yaaif_platform_use` saved `local-hybrid` (active-profile.json wins over plugin var `hosted`) and reload the YAA\F MCP after rebuilding.
 4. If not authenticated: `yaaif_ensure_session` or `yaaif_login` / `yaaif_login_device`.
 5. Confirm with `yaaif_whoami`.
-6. If `local_tools` fails: ensure agent-service exposes `/api/local-tools` and
+6. Call `yaaif_features` for a compact capability map. `available` means the route and caller access work; `permission_denied` means the backend supports it but the caller needs the named permission; `unavailable` means the backend needs an upgrade; `error` is a transport/service failure. Doctor's `feature_*` checks use the same probes.
+7. If `local_tools` fails: ensure agent-service exposes `/api/local-tools` and
    the session has `agent.skills.read` (restart agent-service after upgrade).
-7. If `local_tools_files` / `local_tools_files_smoke` / `file_artifacts_api` / `file_registry*` fail: upgrade
+8. If `local_tools_files` / `local_tools_files_smoke` / `file_artifacts_api` / `file_registry*` fail: upgrade
    agent-service for ADK artifacts (`load_artifacts`, `/api/files/artifacts/versions`,
    registry lifecycle). Reload the YAA\F MCP after rebuilding the plugin.
 

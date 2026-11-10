@@ -18,7 +18,7 @@ Task Progress:
 - [ ] 5a. HTTP: image + yaaif_mcp_deployment_*
 - [ ] 5b. Command: yaaif_desktop_tool_package_publish
 - [ ] 6. Register / install onto workers
-- [ ] 7. API key (if MCP → platform APIs)
+- [ ] 7. External credentials / API key (as required)
 - [ ] 8. Verify catalog
 ```
 
@@ -51,7 +51,13 @@ Command MCP (SAP GUI, Node stdio): **do not** `yaaif_mcp_deployment_create`. Ins
 
 Write short contracts (name, description, inputs). Names become catalog names — keep them stable snake_case. See [references/templates.md](references/templates.md).
 
-Decide whether tools call **YAA\F platform APIs** (context-store, approvals read, ambient HTTP, local-tools, skills read, files). If yes, plan a scoped **API key** (not platform S2S). See [references/api-keys.md](references/api-keys.md).
+Decide whether tools call external systems, **YAA\F platform APIs**, or both. External secrets use [references/credentials.md](references/credentials.md). Platform calls use a scoped **API key** (not platform S2S) from [references/api-keys.md](references/api-keys.md).
+
+## External credentials
+
+Call `yaaif_features` first. If `credentials` is `unavailable`, upgrade api-server; if `permission_denied`, request `api.credentials.read` for inspection and `api.credentials.write` for changes.
+
+For external HTTP authentication, create write-only values with `yaaif_credential_create`, register with `yaaif_mcp_server_create` + `header_mappings`, then refresh. For tool-argument secrets, configure `yaaif_mcp_credential_profile_upsert` (`field_map` + `arg_injection`) and `yaaif_mcp_credential_mapping_upsert` at tenant, skill, or personal scope. Follow [references/credentials.md](references/credentials.md); skills only reference profile names and never contain `credentials.yaml` or secret values.
 
 ## Scaffold
 
@@ -91,6 +97,10 @@ Plaintext from create/rotate is shown **once** — bind immediately; do not past
 
 Skip this section when the MCP only talks to external systems and never calls YAA\F APIs (and email outbound already uses `yeo-` keys, not these API keys).
 
+## Cross-server copy
+
+Use `yaaif_mcp_server_copy` with source/destination profile ids. Preview first, then confirm. It copies endpoint metadata and non-secret header mappings only, never credential ids, profiles, mappings, literal headers, or tool refresh calls. Rebind destination credentials explicitly after review.
+
 ## Fallback
 
 `yaaif_mcp_link_or_create` against an already-running endpoint; optional `yaaif_mcp_server_refresh`. Still mint/bind an API key if that endpoint calls platform APIs. Use when deployment-service is unavailable or the MCP runs outside YAA\F-managed compose/GitOps.
@@ -99,4 +109,5 @@ Skip this section when the MCP only talks to external systems and never calls YA
 
 `yaaif_mcp_tools_list` — confirm exact tool names before wiring skills/workflows.
 `yaaif_desktop_tool_packages_list` — confirm command MCP packages in the Package Registry.
+`yaaif_credential_list`, `yaaif_mcp_credential_profiles_list`, and `yaaif_mcp_credential_mappings_list` — confirm external secret metadata and bindings without reading values.
 `yaaif_api_key_list` — confirm credential linked when platform calls are in scope.

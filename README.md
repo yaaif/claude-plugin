@@ -5,17 +5,22 @@ Claude-Code-native skills and slash commands for authenticated YAAIF planning,
 skill creation, MCP deployment, scenario lifecycle, ambient workflows,
 diagnostics, platform tools, and read-only operations support.
 
-**Version:** 1.3.2  
+**Version:** 1.7.0
 **Logo:** [`assets/logo.svg`](assets/logo.svg)
 
 ## Install
 
 ```bash
 cd ~
-npx -y @yaaif/platform-mcp@1.3.5 --install --client claude
+npx -y @yaaif/platform-mcp@1.7.0 --install --client claude
 claude plugin marketplace add yaaif/claude-plugin
 claude plugin install yaaif-platform@yaaif
 ```
+
+The installer downloads the matching `v1.7.0` source into
+`~/.yaaif/claude/plugin`. Use that path with `claude --plugin-dir` or as a local
+marketplace instead of cloning. Source controls: `--plugin-src`, `--plugin-ref`,
+`--plugin-sha256`, and `--plugin-source-base-url` for enterprise mirrors.
 
 The installer asks you to choose hosted `https://platform.yaaif.ai` or type
 another YAAIF URL. Non-interactive: `--yaaif-url https://your.yaaif.host` or
@@ -34,7 +39,7 @@ claude --plugin-dir /path/to/claude-plugin
 The plugin starts:
 
 ```text
-npx -y @yaaif/platform-mcp@1.3.5 --client claude
+npx -y @yaaif/platform-mcp@1.7.0 --client claude
 ```
 
 Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or
@@ -49,7 +54,10 @@ Node.js 20 or later is required. Run `/yaaif-platform:yaaif-login` (or
 ## Profiles and state
 
 Claude Code uses `~/.yaaif/claude` exclusively. It never reads or overwrites
-Cursor state in `~/.yaaif/cursor` or Codex state in `~/.yaaif/codex`.
+Cursor state in `~/.yaaif/cursor` or Codex state in `~/.yaaif/codex`. Successful
+updates remove older versioned caches under `~/.claude/plugins/cache/yaaif/yaaif-platform/`
+and move them to `~/.yaaif/claude/plugin-backups/`; use `--keep-old-versions`
+to retain them. Failed installation or verification restores the previous managed source and launcher configuration.
 
 | Profile | Intended use |
 | --- | --- |

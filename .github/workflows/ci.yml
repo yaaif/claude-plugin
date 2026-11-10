@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: yaaif/cursor-plugin
+          path: cursor-plugin
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Inventory, feature contract, and shared skills
+        run: PYTHONDONTWRITEBYTECODE=1 python3 scripts/check-plugin.py --require-skill-sync

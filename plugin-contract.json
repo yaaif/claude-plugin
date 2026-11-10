@@ -1,0 +1,185 @@
+{
+  "contractVersion": 1,
+  "bridgeVersion": "1.7.0",
+  "mcpPackage": "@yaaif/platform-mcp@1.7.0",
+  "pluginVersions": {
+    "cursor": "1.7.0",
+    "claude": "1.7.0",
+    "codex": "1.7.0",
+    "vscode": "1.7.0",
+    "intellij": "1.7.0"
+  },
+  "clientIds": {
+    "cli": "yaaif-cli",
+    "cursor": "yaaif-cursor",
+    "claude": "yaaif-claude",
+    "codex": "yaaif-codex",
+    "vscode": "yaaif-vscode",
+    "intellij": "yaaif-intellij",
+    "opencode": "yaaif-opencode"
+  },
+  "coreSkills": [
+    "yaaif-auth",
+    "yaaif-create-ambient",
+    "yaaif-create-file-workflow",
+    "yaaif-create-mcp",
+    "yaaif-create-skill",
+    "yaaif-docs",
+    "yaaif-doctor",
+    "yaaif-governance",
+    "yaaif-kg-enhance",
+    "yaaif-kg-skill-plan",
+    "yaaif-ops-support",
+    "yaaif-plan-usecase",
+    "yaaif-platform-tools",
+    "yaaif-platform-updates",
+    "yaaif-requirements",
+    "yaaif-scenario",
+    "yaaif-wiki"
+  ],
+  "commands": [
+    "yaaif-doctor",
+    "yaaif-governance",
+    "yaaif-kg-enhance",
+    "yaaif-kg-skill-plan",
+    "yaaif-login",
+    "yaaif-new-file-workflow",
+    "yaaif-new-mcp",
+    "yaaif-new-skill",
+    "yaaif-new-workflow",
+    "yaaif-ops",
+    "yaaif-plan",
+    "yaaif-platform-tools",
+    "yaaif-requirements",
+    "yaaif-scenario",
+    "yaaif-sync-scenario",
+    "yaaif-updates",
+    "yaaif-wiki"
+  ],
+  "codexAliasSkills": [
+    "yaaif-login",
+    "yaaif-new-file-workflow",
+    "yaaif-new-mcp",
+    "yaaif-new-skill",
+    "yaaif-new-workflow",
+    "yaaif-ops",
+    "yaaif-plan",
+    "yaaif-sync-scenario"
+  ],
+  "requiredConfigKeys": [
+    "YAAIF_PLATFORM_PROFILE",
+    "YAAIF_OIDC_AUTHORITY",
+    "YAAIF_API_BASE_URL",
+    "YAAIF_AGENT_BASE_URL",
+    "YAAIF_CONTROL_PLANE_BASE_URL",
+    "YAAIF_APPROVAL_BASE_URL",
+    "YAAIF_DEFAULT_TENANT_ID",
+    "YAAIF_OIDC_CLIENT_ID",
+    "YAAIF_EXTRA_CA_FILE",
+    "YAAIF_CLIENT_CERT_FILE",
+    "YAAIF_CLIENT_KEY_FILE"
+  ],
+  "registrationModules": [
+    "registerAuthTools",
+    "registerGovernanceTools",
+    "registerWikiTools",
+    "registerPlatformUpdateTools",
+    "registerMigrationTools",
+    "registerSkills",
+    "registerAmbient",
+    "registerMcp",
+    "registerMcpDeploymentTools",
+    "registerApiKeyTools",
+    "registerUserTools",
+    "registerCredentialTools",
+    "registerDesktopTools",
+    "registerDesktopPackageTools",
+    "registerApprovalTools",
+    "registerPlanTools",
+    "registerSpecTools",
+    "registerOpsTools",
+    "registerOpsSupportTools",
+    "registerLocalTools",
+    "registerFileTools",
+    "registerFileWorkflowTools",
+    "registerDoctorTools",
+    "registerDocsTools"
+  ],
+  "requiredTools": {
+    "auth": [
+      "yaaif_login",
+      "yaaif_login_device",
+      "yaaif_whoami",
+      "yaaif_list_tenants",
+      "yaaif_set_tenant",
+      "yaaif_ensure_session"
+    ],
+    "capabilities": [
+      "yaaif_features"
+    ],
+    "migration": [
+      "yaaif_platform_clone",
+      "yaaif_scenario_copy",
+      "yaaif_ambient_workflow_copy",
+      "yaaif_catalog_copy",
+      "yaaif_agent_copy",
+      "yaaif_mcp_server_copy",
+      "yaaif_skill_copy",
+      "yaaif_platform_bundle_export",
+      "yaaif_platform_bundle_import"
+    ],
+    "credentials": [
+      "yaaif_credential_list",
+      "yaaif_credential_create",
+      "yaaif_mcp_server_create",
+      "yaaif_mcp_credential_profiles_list",
+      "yaaif_mcp_credential_profile_upsert",
+      "yaaif_mcp_credential_mappings_list",
+      "yaaif_mcp_credential_mapping_upsert"
+    ],
+    "fileWorkflows": [
+      "yaaif_file_workflow_template",
+      "yaaif_file_workflow_create"
+    ],
+    "scenarios": [
+      "yaaif_agent_spec_create",
+      "yaaif_agent_spec_sync_preview",
+      "yaaif_agent_spec_sync_apply"
+    ],
+    "docs": [
+      "yaaif_docs_search",
+      "yaaif_docs_page"
+    ],
+    "wiki": [
+      "yaaif_wiki_pages_list",
+      "yaaif_wiki_page_get",
+      "yaaif_wiki_graph",
+      "yaaif_wiki_common_status",
+      "yaaif_wiki_proposals_list",
+      "yaaif_wiki_proposal_get",
+      "yaaif_wiki_rebuild_preview",
+      "yaaif_wiki_rebuild_latest",
+      "yaaif_wiki_rebuild_runs_list",
+      "yaaif_wiki_rebuild_get"
+    ],
+    "platformUpdates": [
+      "yaaif_platform_update_status",
+      "yaaif_platform_update_jobs_list",
+      "yaaif_platform_update_job_get"
+    ]
+  },
+  "openCode": {
+    "maxTools": 120,
+    "requiredExpose": [
+      "yaaif_features",
+      "yaaif_wiki_pages_list",
+      "yaaif_wiki_page_get",
+      "yaaif_wiki_graph",
+      "yaaif_wiki_common_status",
+      "yaaif_platform_update_status",
+      "yaaif_platform_update_jobs_list",
+      "yaaif_platform_update_job_get"
+    ],
+    "notes": "Curated for model tool limits. Advanced/destructive administration, duplicate aliases, Wiki proposal/rebuild inspection and other specialized tools remain available in other IDEs and yaaif tools call. Wiki and platform-update tools are read-only."
+  }
+}

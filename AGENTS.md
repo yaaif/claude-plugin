@@ -12,6 +12,7 @@ When the user asks to work with YAAIF (skills, MCP tools/deployments, ambient wo
 8. Prefer `yaaif_skill_map_agents_merge` over replace. Use `yaaif_plan_dry_run` before large executes.
 9. Never use S2S secrets, desktop connection keys, or AI-gateway keys for this plugin. For MCP → platform APIs use tenant **API keys** (`yaaif_api_key_create` / bind) — not S2S.
 10. Do **not** author skill-pack `credentials.yaml`. Bind SAP/API secrets on the **MCP server credential profile** (field_map + arg_injection); skills only store a profile name ref. Ambient calls use the server default profile.
+11. For multiple YAA\F servers, use `yaaif_platform_use` / `yaaif_platform_list`; sessions are isolated in `~/.yaaif/claude/profile-sessions/<profile-id>/`. Use `yaaif_platform_clone` for endpoint-only profile copies, `yaaif_platform_bundle_export` / `yaaif_platform_bundle_import` for secret-free configuration transfer, and `yaaif_scenario_copy` for reviewed draft copies without bindings, history, provenance, credentials, or tokens.
 
 ## Admin UI handoffs
 

@@ -104,7 +104,7 @@ after marking them N/A — prefer keeping the headings for a consistent shape.
 
 - Desktop worker↔skill mappings (Admin / control-plane) if desktop skills are used
 - Approval strategy ids if approval nodes exist
-- Missing credentials / MCP secrets — use `yaaif_api_key_*` for MCP → platform APIs (never S2S in MCP pods)
+- Missing credentials / MCP secrets — use `yaaif_credential_*` + `yaaif_mcp_credential_*` for external systems; use `yaaif_api_key_*` only for MCP → YAA\F platform APIs (never S2S or skill `credentials.yaml`)
 - Other: …
 
 ## 9. Execution log

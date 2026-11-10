@@ -65,7 +65,7 @@ When the prompt includes `spec_id` (and usually `slug` / `name`):
 If there is no `spec_id`:
 
 1. `yaaif_agent_spec_list` (`q` from the use-case name). Reuse if a match exists.
-2. For a multi-capability use case, prefer `yaaif-plan-usecase` / `/yaaif-platform:yaaif-plan`
+2. For a multi-capability use case, prefer `yaaif-plan-usecase` / `/yaaif-plan`
    and create the spec immediately after plan approval.
 3. Otherwise create now with `yaaif_agent_spec_create`:
    - `slug` kebab-case, unique in the tenant
@@ -82,7 +82,7 @@ If there is no `spec_id`:
 
 ## Mode C — apply spec → objects (or adopt live drift)
 
-`/yaaif-platform:yaaif-sync-scenario` or when the user asks to keep the scenario in sync:
+`/yaaif-sync-scenario` or when the user asks to keep the scenario in sync:
 
 1. Resolve `spec_id` (prompt, list, or last selected scenario).
 2. `yaaif_agent_spec_get` + readiness + coverage.
@@ -105,7 +105,8 @@ If there is no `spec_id`:
   `trigger_ambient_workflow`.
 - Do not hardcode tenant business copy into YAA\F core services; keep it in
   skills / MCP tools / this spec’s segments.
-- Credentials stay on MCP server profiles, not skill-pack `credentials.yaml`.
+- Credentials stay on MCP server profiles, not skill-pack `credentials.yaml`; use `yaaif_credential_*` and `yaaif_mcp_credential_*` as described in [the credential guide](../yaaif-create-mcp/references/credentials.md). Reserve `yaaif_api_key_*` for MCP → YAA\F platform APIs.
+- To copy between servers, use `yaaif_scenario_copy` with source/destination profile ids. Review the dry-run, then confirm. It creates a draft without bindings/history/provenance or secrets; never use release import to force another tenant's snapshot into place.
 - Live update/delete of bound agents, ambient agents, workflows, and MCP
   servers is observe-by-default (drift only). Do not ask to flip a tenant to
   `require` until Apply/Adopt is in regular use; `require` 409s those writes.

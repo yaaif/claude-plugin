@@ -1,6 +1,6 @@
 # Platform local tools reference
 
-Built-in tools live in agent-service (`internal/mcp/local_tools.go`). The bridge discovers them via `GET /api/local-tools` (`yaaif_local_tools_list`).
+Built-in tools live in agent-service (`internal/mcp/local_tools.go`). Claude Code discovers them via `GET /api/local-tools` (`yaaif_local_tools_list`).
 
 ## Families
 
@@ -15,15 +15,15 @@ Built-in tools live in agent-service (`internal/mcp/local_tools.go`). The bridge
 | context_store | `context_store_*` (license-gated) | Varies |
 | client | `get_client_context` | No |
 
-## MCP REST vs local tools
+## Claude Code REST vs local tools
 
 | Goal | Prefer |
 |------|--------|
-| Browse catalog / enable / map agents | MCP REST: `yaaif_skill_*`, `yaaif_agent_*` |
+| Browse catalog / enable / map agents | Claude Code REST: `yaaif_skill_*`, `yaaif_agent_*` |
 | Author / validate module on disk | Local: `skill_*` via `yaaif_local_tool_call` |
 | List ambient graphs for install | Either REST `yaaif_ambient_workflow_list` or local `list_ambient_workflows` |
 | Trigger ambient from a chat skill | Local name in frontmatter: `trigger_ambient_workflow` |
-| Approval strategy CRUD | MCP REST `yaaif_approval_strategy_*` |
+| Approval strategy CRUD | Claude Code REST `yaaif_approval_strategy_*` |
 | Approval inbox decide at runtime | Local `yaaif_approval_*` or Claude Code ambient/approval ops tools |
 
 ## Mutating ack
@@ -54,5 +54,5 @@ Ingested files are addressable by durable `file_id` **or** ADK artifact name
 
 - Prefer `load_artifacts` when referring to files by human-readable name/version
 - `file_load_context` accepts the same dual reference (`file_id` or filename + optional `version`)
-- MCP REST helpers (outside local tools): `yaaif_file_artifact_versions`,
+- Claude Code REST helpers (outside local tools): `yaaif_file_artifact_versions`,
   `yaaif_file_get_extracted`, `yaaif_session_files_list` (`latest_only=true`)

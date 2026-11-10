@@ -127,7 +127,7 @@ needs mapping. After execute, preview catalog sync with
 record passing evidence for every `must` requirement, refresh readiness, and
 only then publish and transition to `active`. `yaaif_plan_execution_resume`
 refreshes readiness/version and halts for conflicts or failed evidence. Later object edits in
-Claude Code stay on the spec automatically; use `/yaaif-platform:yaaif-sync-scenario` to pull or
+Claude Code stay on the spec automatically; use `/yaaif-sync-scenario` to pull or
 push the full inventory.
 
 Before mutating, call `yaaif_plan_execution_save` with the ordered steps (status
@@ -188,6 +188,10 @@ Update the plan file's execution checklist with created ids as you go.
   `yaaif_desktop_skill_mapping_*`.
 - Ambient graphs use workflow + ambient agents; chat orchestration skills map to
   the chat agent that should trigger the workflow.
+
+## Cross-server copy
+
+Use `yaaif_agent_copy` with source/destination profile ids when moving an agent definition. Preview first, then confirm. It preserves prompt, description and agent type, drops skill mappings and Scenario bindings, and creates the destination disabled for review. For a selected catalog, use `yaaif_catalog_copy` with the same dependency order and conflict protection.
 
 ## Hand-off
 

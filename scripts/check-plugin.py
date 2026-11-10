@@ -9,41 +9,11 @@ import os
 import sys
 from pathlib import Path
 
-PLUGIN_VERSION = "1.3.3"
-MCP_PACKAGE = "@yaaif/platform-mcp@1.3.8"
-
-EXPECTED_SKILLS = (
-    "yaaif-governance",
-    "yaaif-auth",
-    "yaaif-create-ambient",
-    "yaaif-create-mcp",
-    "yaaif-create-skill",
-    "yaaif-doctor",
-    "yaaif-kg-enhance",
-    "yaaif-kg-skill-plan",
-    "yaaif-ops-support",
-    "yaaif-plan-usecase",
-    "yaaif-platform-tools",
-    "yaaif-requirements",
-    "yaaif-scenario",
-)
-
-EXPECTED_COMMANDS = (
-    "yaaif-governance",
-    "yaaif-doctor",
-    "yaaif-kg-enhance",
-    "yaaif-kg-skill-plan",
-    "yaaif-login",
-    "yaaif-new-mcp",
-    "yaaif-new-skill",
-    "yaaif-new-workflow",
-    "yaaif-ops",
-    "yaaif-plan",
-    "yaaif-platform-tools",
-    "yaaif-requirements",
-    "yaaif-scenario",
-    "yaaif-sync-scenario",
-)
+CONTRACT = json.loads((Path(__file__).resolve().parents[1] / "plugin-contract.json").read_text(encoding="utf-8"))
+PLUGIN_VERSION = CONTRACT["pluginVersions"]["claude"]
+MCP_PACKAGE = CONTRACT["mcpPackage"]
+EXPECTED_SKILLS = tuple(CONTRACT["coreSkills"])
+EXPECTED_COMMANDS = tuple(CONTRACT["commands"])
 
 USER_CONFIG_KEYS = (
     "YAAIF_PLATFORM_PROFILE",
@@ -159,6 +129,19 @@ def check_inventory(root: Path) -> list[str]:
     )
     if extra_cmds:
         errors.append(f"unexpected commands: {extra_cmds}")
+
+    credential_guide = skills_dir / "yaaif-create-mcp" / "references" / "credentials.md"
+    if not credential_guide.is_file():
+        errors.append("missing MCP credential profile guide")
+    else:
+        text = credential_guide.read_text(encoding="utf-8")
+        for tool in CONTRACT["requiredTools"]["credentials"]:
+            if tool not in text:
+                errors.append(f"credential guide missing {tool}")
+    for skill in skills_dir.glob("*/SKILL.md"):
+        text = skill.read_text(encoding="utf-8")
+        if "yaaif_agent_spec_sync_to_objects" in text or "yaaif_agent_spec_sync_from_objects" in text:
+            errors.append(f"{skill} uses direct sync instead of preview/apply")
 
     return errors
 
