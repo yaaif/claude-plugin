@@ -166,6 +166,11 @@
       "yaaif_platform_update_status",
       "yaaif_platform_update_jobs_list",
       "yaaif_platform_update_job_get"
+    ],
+    "skillSecurity": [
+      "yaaif_skill_security",
+      "yaaif_skill_security_scan",
+      "yaaif_skill_security_report"
     ]
   },
   "openCode": {
@@ -178,7 +183,8 @@
       "yaaif_wiki_common_status",
       "yaaif_platform_update_status",
       "yaaif_platform_update_jobs_list",
-      "yaaif_platform_update_job_get"
+      "yaaif_platform_update_job_get",
+      "yaaif_skill_security"
     ],
     "notes": "Curated for model tool limits. Advanced/destructive administration, duplicate aliases, Wiki proposal/rebuild inspection and other specialized tools remain available in other IDEs and yaaif tools call. Wiki and platform-update tools are read-only."
   }
