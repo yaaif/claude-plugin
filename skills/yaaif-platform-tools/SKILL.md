@@ -58,6 +58,8 @@ Report the local tool names confirmed for the skill, any validation result, and 
 
 ## Saved-skill security and maintenance
 
+For rapid iteration, `action: "scan", scope: "skills", skill_paths: ["path/to/SKILL.md"]` scans selected saved folders (up to 25), without workspace activation eligibility. Default `scope: "workspace"` inspects all skills. Recent complete matching evidence is reused for 15 minutes; use `force: true` for fresh checks. `action: "cancel", scan_id` cancels queued/running work. Read `phase`, target counts, timestamps and reuse provenance from reports; wait two seconds between active polls. Always finish release preparation with a full workspace scan.
+
 Before scanner triage or repairs, read `yaaif_skill_security` with
 `action: "guide"` (offline SOP bundled in the bridge). Select `topic: "triage"`,
 `"repair"`, `"troubleshooting"`, or `"sources"` for focused guidance. It includes
